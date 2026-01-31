@@ -1,0 +1,2 @@
+{"time": 1765550607.60347, "level": "INFO", "message": "User logged in", "context": {"user": "john"}}
+{"time": 1765550607.604469, "level": "INFO", "message": "Order processed", "context": {"order_id": 12345}}

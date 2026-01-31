@@ -1,0 +1,24 @@
+2025-12-12 16:37:07.023 | ERROR    | __main__:<module>:12 - An error has been caught in function '<module>', process 'MainProcess' (11236), thread 'MainThread' (29864):
+Traceback (most recent call last):
+
+> File "C:\Users\Maksym\Asia_tasks\code_snippsets\useful_features\logging\error_handling__7.py", line 12, in <module>
+    divide(10, 0)
+    └ <function divide at 0x0000023A38EDCAE0>
+
+  File "C:\Users\Maksym\Asia_tasks\code_snippsets\useful_features\logging\error_handling__7.py", line 10, in divide
+    return a / b
+           │   └ 0
+           └ 10
+
+ZeroDivisionError: division by zero
+2025-12-12 16:37:07.024 | ERROR    | __main__:<module>:24 - Database connection failed
+Traceback (most recent call last):
+
+> File "C:\Users\Maksym\Asia_tasks\code_snippsets\useful_features\logging\error_handling__7.py", line 24, in <module>
+    connect_to_db("localhost", 123)
+    └ <function connect_to_db at 0x0000023A38EDFEC0>
+
+  File "C:\Users\Maksym\Asia_tasks\code_snippsets\useful_features\logging\error_handling__7.py", line 20, in connect_to_db
+    raise ValueError("Invalid port number")
+
+ValueError: Invalid port number

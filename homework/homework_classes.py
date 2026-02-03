@@ -31,7 +31,7 @@ class Server:
             print("Status must be eather True or False, now status automatically set to False")
             return "stopped"
 
-    def __init__(self, name: str, ip: int, status: bool):
+    def __init__(self, name: str, ip: str, status: bool):
         self._name = name
         self._ip = ip
         self._status = self.__status_changer(status)

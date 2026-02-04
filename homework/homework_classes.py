@@ -21,20 +21,13 @@ FileServer(Server) — додає приватний атрибут __storage_us
 """
 
 class Server:
-
-    def __status_changer(self, new_status: bool) -> str:
-        if new_status:
-            return "running"
-        elif not new_status:
-            return "stopped"
-        else:
-            print("Status must be eather True or False, now status automatically set to False")
-            return "stopped"
-
     def __init__(self, name: str, ip: str, status: bool):
         self._name = name
         self._ip = ip
-        self._status = self.__status_changer(status)
+        if status:
+            self._status = "running"
+        elif not status:
+            self._status = "stopped"
 
     def info(self):
         return f"Server {self._name}, ip: {self._ip}, status:{self._status}"
@@ -49,7 +42,7 @@ class WebServer(Server):
         self.__requests_per_minute = requests_per_minute
 
     def info(self):
-        return f"Server {self._name}, ip: {self._ip}, status:{self._status}, requests per minute: {self.__requests_per_minute}"
+        return f"{super().info()}, requests per minute: {self.__requests_per_minute}"
 
 
 class DatabaseServer(Server):
@@ -58,7 +51,7 @@ class DatabaseServer(Server):
         self.__active_connections = active_connections
 
     def info(self):
-        return f"Server {self._name}, ip: {self._ip}, status:{self._status}, active connections: {self.__active_connections}"
+        return f"{super().info()}, active connections: {self.__active_connections}"
 
 
 class FileServer(Server):
@@ -67,7 +60,7 @@ class FileServer(Server):
         self.__storage_usage = storage_usage
 
     def info(self):
-        return f"Server {self._name}, ip: {self._ip}, status:{self._status}, storage usage: {self.__storage_usage}"
+        return f"{super().info()}, storage usage: {self.__storage_usage}"
 
 
 ser = Server("digger", "1.2.3.4", True)

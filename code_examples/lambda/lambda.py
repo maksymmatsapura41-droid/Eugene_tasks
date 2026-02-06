@@ -11,7 +11,14 @@ f = lambda x: x + 1
 f1 = lambda x, y: x + y
 f2 = lambda a, b, c: a + b + c
 
-sorted([5, 2, 9], key=lambda x: -x)
+# 1. [5, 2, 9]
+# 2. key - set sorting logic
+# 3. [-5, -2, -9] <-> [5, 2,9]
+# 4. [-9, -5, -2]
+# 5. [9, 5, 2]
+
+
+print(sorted([5, 2, 9], key=lambda x: -x))
 nums = [1, 2, 3, 4]
 even = list(filter(lambda x: x % 2 == 0, nums))
 
@@ -27,17 +34,16 @@ info = partial(log, "[INFO]")
 #sort by second argument
 items = [(1, 5), (3, 1), (4, 9)]
 sorted_items = sorted(items, key=lambda x: x[1])
+print(sorted_items)
 
 # map
 nums = [1, 2, 3]
 doubled = list(map(lambda x: x * 2, nums))
 
-# filter
+#if example
 nums = [1, 2, 3, 4]
-even = list(filter(lambda x: x % 2 == 0, nums))
-
-#i f example
-even_odd = list(filter(lambda x: "even" if x % 2 == 0 else "odd", even))
+even_odd = list(map(lambda x: "even" if x % 2 == 0 else "odd", nums))
+print(even_odd)
 
 
 # bad example

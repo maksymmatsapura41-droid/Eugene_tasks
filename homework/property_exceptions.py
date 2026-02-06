@@ -11,7 +11,8 @@
 # Property:
     # У класах датчиків додай приватний атрибут _threshold (поріг спрацювання).
     # Використовуй @property для отримання значення порогу.
-    # Створи @threshold.setter, який буде перевіряти, щоб поріг не був від’ємним (якщо значення некоректне - виводити попередження або піднімати помилку).
+    # Створи @threshold.setter, який буде перевіряти, щоб поріг не був від’ємним
+# (якщо значення некоректне - виводити попередження або піднімати помилку).
 # Exceptions (Винятки):
     # Створи власний клас винятку SensorCriticalError.
     # Під час зчитування даних, якщо отримане значення перевищує threshold, програма повинна "викинути" (raise) цей виняток.
@@ -19,5 +20,69 @@
     # Реалізуй __str__ для гарного виводу інформації про датчик (назва та поточний поріг).
     # Реалізуй __eq__ (comparison), щоб можна було порівняти два датчики за їхнім типом та порогом.
 # Files (Робота з файлами):
-    # Реалізуй механізм запису логів. Щоразу, коли стається SensorCriticalError, опис помилки та час мають записуватися у файл sensor_log.txt.
+    # Реалізуй механізм запису логів. Щоразу, коли стається SensorCriticalError, опис помилки та час мають записуватися
+# у файл sensor_log.txt.
     # Використовуй конструкцію with open(...) для безпечної роботи з файлом.
+import random
+from abc import ABC, abstractmethod
+
+
+class SensorCriticalError(Exception):
+    pass
+
+
+class AbstractBaseSensor(ABC):
+    @abstractmethod
+    def read_data(self):
+        pass
+
+    def log_status(self):
+        return "Arbeiten"
+
+
+class TemperatureSensor(AbstractBaseSensor):
+    def __init__(self, threshold):
+        self._threshold = threshold
+
+    def read_data(self):
+        print(f"Temperature: {random.randint(15, 100)}")
+
+    @property
+    def threshold(self):
+        return self._threshold
+
+    @threshold.setter
+    def threshold(self, value):
+        if value < 0:
+            raise ValueError("Threshold can't be negative")
+        self._threshold = value
+
+
+class PressureSensor(AbstractBaseSensor):
+    def __init__(self, threshold):
+        self._threshold = threshold
+
+    def read_data(self):
+        print(f"Pressure: {random.randint(1, 5) + random.random()}")
+
+    @property
+    def threshold(self):
+        return self._threshold
+
+    @threshold.setter
+    def threshold(self, value):
+        if value < 0:
+            raise ValueError("Threshold can't be negative")
+        self._threshold = value
+
+
+def analyze_sensor(sensor):
+    print(f"Data status: {sensor.log_status()}")
+    print(f"Data string: {sensor.read_data()}")
+
+
+temp = TemperatureSensor(threshold=70)
+pressure = PressureSensor(threshold=3.5)
+
+analyze_sensor(temp)
+analyze_sensor(pressure)

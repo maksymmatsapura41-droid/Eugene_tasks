@@ -24,6 +24,7 @@
 # у файл sensor_log.txt.
     # Використовуй конструкцію with open(...) для безпечної роботи з файлом.
 import random
+import datetime
 from abc import ABC, abstractmethod
 
 
@@ -31,21 +32,16 @@ class SensorCriticalError(Exception):
     pass
 
 
-class AbstractBaseSensor(ABC):
+class BaseSensor(ABC):
+    def __init__(self, threshold):
+        self.threshold = threshold
+
     @abstractmethod
     def read_data(self):
         pass
 
     def log_status(self):
-        return "Arbeiten"
-
-
-class TemperatureSensor(AbstractBaseSensor):
-    def __init__(self, threshold):
-        self._threshold = threshold
-
-    def read_data(self):
-        print(f"Temperature: {random.randint(15, 100)}")
+        return f"Status: The sensor is operating normally."
 
     @property
     def threshold(self):
@@ -54,35 +50,49 @@ class TemperatureSensor(AbstractBaseSensor):
     @threshold.setter
     def threshold(self, value):
         if value < 0:
-            raise ValueError("Threshold can't be negative")
+            raise ValueError("The threshold cannot be negative!")
         self._threshold = value
 
+    def __str__(self):
+        return f"Sensor: {self.__class__.__name__} (The threshold: {self.threshold})"
 
-class PressureSensor(AbstractBaseSensor):
-    def __init__(self, threshold):
-        self._threshold = threshold
+    def __eq__(self, other):
+        if not isinstance(other, BaseSensor):
+            return False
+        return self.__class__ == other.__class__ and self.threshold == other.threshold
 
+
+class TemperatureSensor(BaseSensor):
     def read_data(self):
-        print(f"Pressure: {random.randint(1, 5) + random.random()}")
+        value = random.randint(15, 100)
+        if value > self.threshold:
+            raise SensorCriticalError(f"Critical temperature: {value}°C (The threshold: {self.threshold})")
+        return value
 
-    @property
-    def threshold(self):
-        return self._threshold
 
-    @threshold.setter
-    def threshold(self, value):
-        if value < 0:
-            raise ValueError("Threshold can't be negative")
-        self._threshold = value
+class PressureSensor(BaseSensor):
+    def read_data(self):
+        value = round(random.uniform(1.0, 5.0), 1)
+        if value > self.threshold:
+            raise SensorCriticalError(f"Critical pressure: {value} bar (Threshold: {self.threshold})")
+        return value
 
 
 def analyze_sensor(sensor):
-    print(f"Data status: {sensor.log_status()}")
-    print(f"Data string: {sensor.read_data()}")
+    print(f"--- Analise: {sensor} ---")
+    try:
+        data = sensor.read_data()
+        print(f"Current value: {data}")
+        print(sensor.log_status())
+    except SensorCriticalError as e:
+        error_msg = f"[{datetime.datetime.now()}] CRITICAL ERROR: {e}"
+        print(error_msg)
+
+        with open("sensor_log.txt", "a", encoding="utf-8") as file:
+            file.write(error_msg + "\n")
+    print("-" * 30)
 
 
-temp = TemperatureSensor(threshold=70)
-pressure = PressureSensor(threshold=3.5)
-
-analyze_sensor(temp)
-analyze_sensor(pressure)
+t_sensor = TemperatureSensor(threshold=70)
+p_sensor = PressureSensor(threshold=3.5)
+p_sensor_duplicate = PressureSensor(threshold=3.5)

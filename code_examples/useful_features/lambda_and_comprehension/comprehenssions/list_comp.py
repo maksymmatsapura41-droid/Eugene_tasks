@@ -49,7 +49,7 @@ grades = {
 result = [ (name, grade) 
           for name, marks in grades.items() 
           for grade in marks if grade > 10]
-
+list
 print(result)
 
 

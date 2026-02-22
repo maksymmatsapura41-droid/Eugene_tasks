@@ -7,3 +7,9 @@ def test_access_permissions(client):
 
 def test_auth_type(client):
     assert client["auth"] in ("token", "basic")
+
+
+lst_1 = []
+
+print(dir(lst_1))
+print(help(lst_1))

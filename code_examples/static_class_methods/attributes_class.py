@@ -1,10 +1,11 @@
-class Person:
-    type = "Person"
-    description = "Describes a person"
+import copy
+
+lst_1 = [[1,2],[3,4]]
+
+lst_2 = copy.deepcopy(lst_1)
+
+lst_1[0][0] = 'x'
 
 
-print(Person.type)  # Person
-print(Person.description)  # Describes a person
-
-Person.type = "Class Person"
-print(Person.type)  # Class Person
+print(lst_1)
+print(lst_2)

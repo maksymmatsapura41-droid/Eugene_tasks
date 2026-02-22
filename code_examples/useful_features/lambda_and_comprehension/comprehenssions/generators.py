@@ -46,3 +46,9 @@ error_logs = read_logs("server.log")
 
 for log in error_logs:
     print(log)
+
+
+lst_1 = []
+
+dir(lst_1)
+help(lst_1)

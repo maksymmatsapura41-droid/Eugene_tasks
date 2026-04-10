@@ -78,6 +78,8 @@ def has_duplicates(nums):
             if nums[i] == nums[j]:
                 return True
     return False
+
+# Use set as unique elements
 #---------------------------------------------------------
 
 # Реалізуй endpoint POST /follow, який приймає follower_id і following_id.

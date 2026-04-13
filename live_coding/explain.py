@@ -119,3 +119,82 @@ def follow_user(payload: dict) -> tuple[int, dict]:
 
     FOLLOWS.append(Follow(follower_id=follower_id, following_id=following_id))
     return 201, {"status": "created"}
+
+
+
+#-----------------------------------------------------------------------------
+#Завдання: чому другий list порожній? Як зробити “багаторазовий” прохід без подвійної роботи?
+xs = map(str.upper, ["a", "b"])
+print(list(xs))
+print(list(xs))
+
+
+#------------------------------------------------------------------------------
+# Завдання: що поверне список і чому?
+def make_handlers():
+    hs = []
+    for i in range(3):
+        def h():
+            return i
+        hs.append(h)
+    return hs
+[f() for f in make_handlers()]
+
+#--------------------------------------------------------------------------------
+#Завдання: що станеться і чому?
+def f(a, b, c=0):
+    return a + b + c
+args = (1, 2)
+kwargs = {"c": 3, "b": 4}
+print(f(*args, **kwargs))
+
+#-------------------------------------------------------------------------------
+#Завдання: який класичний баг та як виправити?
+from dataclasses import dataclass
+@dataclass
+class Box:
+    items: list[int] = []
+
+#-----------------------------------------------------------------------------------
+#Завдання: чому це небезпечно? Як ітерувати “без зміни під ногами”?
+lines = ["a", "b", "c"]
+for i, line in enumerate(lines, start=1):
+    if line == "b":
+        del lines[i]
+
+
+#------------------------------------------------------------------------------------
+# Завдання: що поверне f()
+def f():
+    try:
+        return 1
+    finally:
+        return 2
+
+
+#-----------------------------------------------------------------------------------
+# Завдання: що втрачається? Виправ декоратор.
+def deco(fn):
+    def wrapper(*a, **k):
+        return fn(*a, **k)
+    return wrapper
+
+@deco
+def add(x, y):
+    """adds"""
+    return x + y
+
+print(add.__name__, add.__doc__)
+
+
+# -------------------------------------------------------------------------------
+# Завдання: чому це падає? Як правильно
+class A:
+    def m(self):
+        return "A"
+class B(A):
+    def m(self):
+        def inner():
+            return super().m()
+        return inner()
+B().m()

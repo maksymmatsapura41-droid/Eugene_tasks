@@ -185,16 +185,3 @@ def add(x, y):
     return x + y
 
 print(add.__name__, add.__doc__)
-
-
-# -------------------------------------------------------------------------------
-# Завдання: чому це падає? Як правильно
-class A:
-    def m(self):
-        return "A"
-class B(A):
-    def m(self):
-        def inner():
-            return super().m()
-        return inner()
-B().m()

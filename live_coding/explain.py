@@ -185,3 +185,9 @@ def add(x, y):
     return x + y
 
 print(add.__name__, add.__doc__)
+
+# leetcode tasks
+
+# https://leetcode.com/problems/first-unique-character-in-a-string/description/
+# https://leetcode.com/problems/majority-element/description/
+# https://leetcode.com/problems/happy-number/?envType=problem-list-v2&envId=hash-table
